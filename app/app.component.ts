@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Hero } from './hero';
+import { Auth } from './auth.service';
+
 const HEROES: Hero[] = [
   { id: 11, name: 'Mr. Nice' },
   { id: 12, name: 'Narco' },
@@ -14,7 +16,13 @@ const HEROES: Hero[] = [
 ];
 @Component({
   selector: 'my-app',
+  providers: [Auth],
   template: `
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Auth0 - Angular 2</a>
+      <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
+      <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+    </div>
     <h1>{{title}}</h1>
     <h2>My Heroes</h2>
     <ul class="heroes">
@@ -77,6 +85,8 @@ const HEROES: Hero[] = [
   `]
 })
 export class AppComponent {
+  constructor(private auth: Auth) {}
+
   title = 'Tour of Heroes';
   heroes = HEROES;
   selectedHero: Hero;
