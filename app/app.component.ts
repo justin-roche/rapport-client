@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Hero } from './hero';
 import { Auth } from './auth.service';
+import { HeroService } from './hero.service';
+import { OnInit } from '@angular/core';
 
 const HEROES: Hero[] = [
   { id: 11, name: 'Mr. Nice' },
@@ -16,7 +18,7 @@ const HEROES: Hero[] = [
 ];
 @Component({
   selector: 'my-app',
-  providers: [Auth],
+  providers: [Auth, HeroService],
   template: `
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Auth0 - Angular 2</a>
@@ -85,12 +87,21 @@ const HEROES: Hero[] = [
   `]
 })
 export class AppComponent {
-  constructor(private auth: Auth) {}
+  constructor(private auth: Auth,private heroService: HeroService) {}
+ 
 
   title = 'Tour of Heroes';
-  heroes = HEROES;
+  heroes: Hero[];
+
   selectedHero: Hero;
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
   }
+  getHeroes(): void {
+    this.heroes = this.heroService.getHeroes();
+  }
+  ngOnInit(): void {
+    this.getHeroes();
+  }
+
 }

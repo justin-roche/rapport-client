@@ -6,7 +6,6 @@ import { tokenNotExpired } from 'angular2-jwt';
 // Avoid name not found warnings
 //declare var Auth0Lock: any;
 
-//let Auth0Lock = require('auth0-lock').default;
 declare var Auth0Lock: any;
 
 @Injectable()
